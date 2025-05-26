@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CRITICAL ERROR</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: lime;
+      font-family: "Courier New", monospace;
+      height: 100%;
+      overflow: hidden;
+      user-select: none;
+      cursor: none;
+    }
+
+    #screen {
+      white-space: pre-wrap;
+      padding: 20px;
+      height: 100%;
+      overflow-y: hidden;
+    }
+
+    .shake {
+      animation: shake 0.15s infinite;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-3px, 3px); }
+      50% { transform: translate(3px, -3px); }
+      75% { transform: translate(-2px, 2px); }
+      100% { transform: translate(2px, -2px); }
+    }
+
+    .glitch {
+      animation: glitch 0.15s infinite;
+    }
+
+    @keyframes glitch {
+      0%, 100% {
+        text-shadow: 2px 0 red, -2px 0 blue;
+      }
+      50% {
+        text-shadow: -2px 0 red, 2px 0 blue;
+      }
+    }
+
+    .flash {
+      animation: flash 0.2s infinite;
+    }
+
+    @keyframes flash {
+      0%, 100% { background: black; }
+      50% { background: red; }
+    }
+
+    .bsod {
+      background: #0078D7;
+      color: white;
+      font-family: "Segoe UI", sans-serif;
+      font-size: 24px;
+      text-align: center;
+      padding: 100px;
+    }
+
+    .final {
+      font-size: 20px;
+      padding: 40px;
+      color: red;
+      background: black;
+      animation: flicker 0.1s infinite;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body oncontextmenu="return false">
+  <div id="screen">[!] SYSTEM INITIALIZING...</div>
+
+  <script>
+    const screen = document.getElementById("screen");
+    document.body.requestFullscreen?.(); // Try auto fullscreen
+
+    const messages = [
+      "[Ã—] VIRUS DETECTED: kernel_attack.dll",
+      "[Ã—] ACCESSING WINDOWS SYSTEM FILES...",
+      "[Ã—] REMOTE CONTROL ENABLED",
+      "[Ã—] TRACKING USER IP...",
+      "[Ã—] SENDING DATA TO: unknown_frontman on discord",
+      "[Ã—] ERROR CODE: 0x0000DEAD",
+      "[Ã—] ACTIVATING PAYLOAD...",
+      "[Ã—] WARNING: BIOS UNLOCK DETECTED"
+    ];
+
+    document.addEventListener("keydown", e => e.preventDefault());
+    document.addEventListener("contextmenu", e => e.preventDefault());
+
+    let i = 0;
+
+    function addLog() {
+      if (i < messages.length) {
+        screen.innerHTML += `\n${messages[i]}`;
+        screen.classList.toggle("glitch");
+        screen.classList.toggle("shake");
+        i++;
+        setTimeout(addLog, 800);
+      } else {
+        triggerBSOD();
+      }
+    }
+
+    function triggerBSOD() {
+      screen.className = "bsod";
+      screen.innerHTML = `
+ðŸ˜µ Your PC ran into a problem and needs to restart.
+We're just collecting some error info, and then we'll restart for you.
+
+ERROR CODE: SYSTEM_THREAD_EXCEPTION_NOT_HANDLED
+
+If you call support, give them this info:
+STOP CODE: DEEP_FAKE_VIRUS_WIN32
+
+Collecting data: 99%
+      `;
+      setTimeout(fakeEncrypt, 5000);
+    }
+
+    function fakeEncrypt() {
+      screen.className = "final flash";
+      screen.innerHTML = `
+ðŸ’€ ALL FILES ENCRYPTED ðŸ’€
+
+ðŸ›‘ You have been hacked.
+ðŸ“¹ Camera ON. Microphone ON.
+ðŸ§¬ BIOS access granted.
+
+Send 1000 Bitcoin or kiss your system goodbye.
+ðŸ”’ Restart Disabled
+ðŸ”Œ Safe Mode Blocked
+ðŸ§  Firewall Corrupted
+
+ðŸ’¥ Goodbye.
+      `;
+    }
+
+    setTimeout(() => {
+      addLog();
+    }, 1500);
+  </script>
+</body>
+</html>
